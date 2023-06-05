@@ -1,0 +1,25 @@
+@mixin ForInput($height, $width){
+  height: $height;
+  width: $width;
+}
+
+@mixin ForSelect($height, $width){
+  height: $height;
+  width: $width;
+}
+
+@mixin ForButton($height, $width){
+  height: $height;
+  width: $width;
+}
+
+@mixin Flex($flex, $juc, $alit) {
+  display: $flex;
+  justify-content: $juc;
+  align-items: $alit;
+}
+
+@mixin LabelFlex($flex, $flexdir) {
+  display: $flex;
+  flex-direction: $flexdir;
+}

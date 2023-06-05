@@ -1,0 +1,28 @@
+@use '../../styles/variables.scss';
+@use '../../styles/mixins.scss';
+
+.Select {
+  @include mixins.ForSelect(40px, 200px);
+  border: variables.$InputBorderSize solid rgba(217, 217, 217, 0.39);
+  border-radius: variables.$BorderRadius;
+  text-align: start;
+  padding: 0px 0px 0px 14px;
+  font-weight: variables.$FontWeight;
+  font-size: variables.$FontSize;
+  color: rgba($color: variables.$TextColor, $alpha: variables.$Opacity);
+
+  
+}
+
+.Label {
+  @include mixins.LabelFlex(flex, column);
+  margin-bottom: variables.$MarginBottom;
+  select {
+    margin-top: variables.$MarginTop;
+    cursor: pointer;
+  }
+}
+
+.Error {
+  border: variables.$BorderSize solid variables.$ColorBorder;
+}

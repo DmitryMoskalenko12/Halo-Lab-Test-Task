@@ -1,0 +1,27 @@
+@use '../../styles/variables.scss';
+@use '../../styles/mixins.scss';
+
+.Input {
+  @include mixins.ForInput(20px, 200px);
+  border: variables.$InputBorderSize solid rgba(217, 217, 217, 0.39);
+  border-radius: variables.$BorderRadius;
+  padding: variables.$InputPadding;
+  &::placeholder {
+    font-weight: variables.$FontWeight;
+    font-size: variables.$FontSize;
+    color: variables.$TextColor;
+    opacity: variables.$Opacity;
+  }
+}
+
+.Label {
+  @include mixins.LabelFlex(flex, column);
+  margin-bottom: variables.$MarginBottom;
+  input {
+    margin-top: variables.$MarginTop;
+  }
+}
+
+.Error {
+  border: variables.$BorderSize solid variables.$ColorBorder;
+}

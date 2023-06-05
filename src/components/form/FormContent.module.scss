@@ -1,0 +1,14 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  background-color: #E3E3E3;;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.Required {
+  color: red;
+  margin-bottom: 10px;
+}
