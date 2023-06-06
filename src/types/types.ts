@@ -1,6 +1,6 @@
 export interface Data {
-id: string | undefined;
-value: string;
+  id: string | undefined;
+  value: string;
 }
 
 export interface ISexOption {
@@ -9,37 +9,37 @@ export interface ISexOption {
 }
 
 export interface InitialValues {
-  Name: string,
-  Birthday: string,
-  Sex: string,
-  City: string,
-  Specialty: string,
-  Doctor: string,
-  Email: string,
-  Phone: string,
+  Name: string;
+  Birthday: string;
+  Sex: string;
+  City: string;
+  Specialty: string;
+  Doctor: string;
+  Email: string;
+  Phone: string;
 }
 
 export type Error = {
-  name: string | undefined,
-  birthday: string | undefined,
-  sex: string | undefined,
-  city: string | undefined,
-  specialty: string | undefined,
-  doctor: string | undefined,
-  email: string | undefined,
-  phone: string | undefined,
-}
+  name: string | undefined;
+  birthday: string | undefined;
+  sex: string | undefined;
+  city: string | undefined;
+  specialty: string | undefined;
+  doctor: string | undefined;
+  email: string | undefined;
+  phone: string | undefined;
+};
 
 export type Touch = {
-  nameTouch: boolean | undefined,
-  birthdayTouch: boolean | undefined,
-  sexTouch: boolean | undefined,
-  cityTouch: boolean | undefined,
-  specialtyTouch: boolean | undefined,
-  doctorTouch: boolean | undefined,
-  emailTouch: boolean | undefined,
-  phoneTouch: boolean | undefined,
-}
+  nameTouch: boolean | undefined;
+  birthdayTouch: boolean | undefined;
+  sexTouch: boolean | undefined;
+  cityTouch: boolean | undefined;
+  specialtyTouch: boolean | undefined;
+  doctorTouch: boolean | undefined;
+  emailTouch: boolean | undefined;
+  phoneTouch: boolean | undefined;
+};
 
 export interface ISpecialty {
   id: string;
@@ -48,7 +48,7 @@ export interface ISpecialty {
     gender?: string;
     maxAge?: number;
     minAge?: number;
-  }
+  };
 }
 
 export interface ICity {

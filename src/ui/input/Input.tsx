@@ -1,5 +1,5 @@
 import classes from './Input.module.scss';
-import {Field} from 'formik';
+import { Field } from 'formik';
 import cn from 'classnames';
 
 interface IProps {
@@ -11,15 +11,27 @@ interface IProps {
   touched: boolean | undefined;
 }
 
-const Input: React.FC<IProps> = ({ title, name, placeholder, type, error, touched}) => {
-
+const Input: React.FC<IProps> = ({
+  title,
+  name,
+  placeholder,
+  type,
+  error,
+  touched,
+}) => {
   return (
     <div className={classes.Wrapper}>
-    <label className={classes.Label}>
-    {title}
-    <Field className={cn(classes.Input, {[classes.Error]: error && touched})} type={type} required placeholder={placeholder} name={name}/>
-   </label>
-   </div>
+      <label className={classes.Label}>
+        {title}
+        <Field
+          className={cn(classes.Input, { [classes.Error]: error && touched })}
+          type={type}
+          required
+          placeholder={placeholder}
+          name={name}
+        />
+      </label>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import { InitialValues } from "../types/types";
+import { InitialValues } from '../types/types';
 
 export const initialValues: InitialValues = {
   Name: '',
@@ -9,4 +9,4 @@ export const initialValues: InitialValues = {
   Doctor: '',
   Email: '',
   Phone: '',
-}
+};

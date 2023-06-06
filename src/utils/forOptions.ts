@@ -1,21 +1,21 @@
-import { IDoctors, ICity, ISpecialty } from "../types/types";
+import { IDoctors, ICity, ISpecialty } from '../types/types';
 
 const forOptions = (
   doctors: IDoctors[],
   cities: ICity[],
-  specialties: ISpecialty[]
+  specialties: ISpecialty[],
 ) => {
   const transformeCities = cities.map((city, i) => ({
-    id: String(i + 1),
+    id: String(i),
     value: city.name,
   }));
 
-  const transformeSpecialties= specialties.map((spec, i) => ({
-    id: String(i + 1),
+  const transformeSpecialties = specialties.map((spec, i) => ({
+    id: String(i),
     value: spec.name,
   }));
 
-  const transformeDoctors = doctors.map((doctor) => ({
+  const transformeDoctors = doctors.map(doctor => ({
     id: doctor.id,
     value: `${doctor.name} ${doctor.surname}`,
   }));
@@ -23,4 +23,4 @@ const forOptions = (
   return { transformeCities, transformeSpecialties, transformeDoctors };
 };
 
-export default forOptions; /* Последний этап перед отобраением данных */
+export default forOptions;
