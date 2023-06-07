@@ -7,6 +7,7 @@ export const handleDoctorChange = (
   specialty: ISpecialty[],
   setFieldValue: Function,
 ) => {
+
   const nameDoctor = value.split(' ');
   const selectedDoctor = doctors.find(
     doctor => doctor.name === nameDoctor[0] && doctor.surname === nameDoctor[1],

@@ -10,17 +10,11 @@ import { Error, Touch } from '../../types/types';
 import { useState, useEffect } from 'react';
 import useFormService from '../../services/formService';
 import forOptions from '../../utils/forOptions';
-import { handleDoctorChange } from '../../utils/filters/handleDoctorChange';
-import { filteredByCity } from '../../utils/filters/filteredByCity';
-import { filterBySpecialty } from '../../utils/filters/filteredBySpecialty';
-import { handleSexChange } from '../../utils/filters/handleSexChange';
 import { IDoctors, ISpecialty, ICity } from '../../types/types';
-import { filterByDate } from '../../utils/filters/filteredByDate';
-import { filteredByCityAndSpecialty } from '../../utils/filters/filteredByCityAndSpecialty';
+import filter from '../../utils/filters/filter';
 
 const FormContent: React.FC<Error & Touch> = props => {
   const { getAllCitys, getAllDoctors, getAllSpecialtys } = useFormService();
-
   const [doctors, setDoctors] = useState<IDoctors[]>([]);
   const [doctorsSpecialty, setDoctorsSpecialty] = useState<ISpecialty[]>([]);
   const [filteredDoctorsSpec, setFilteredDoctorsSpec] = useState<ISpecialty[]>(
@@ -29,7 +23,7 @@ const FormContent: React.FC<Error & Touch> = props => {
   const [citys, setCitys] = useState<ICity[]>([]);
   const [filteredDoctors, setFilteredDoctors] = useState<IDoctors[]>([]);
 
-  const { values, setFieldValue } = useFormikContext<InitialValues>();
+  const { values, setFieldValue, isSubmitting } = useFormikContext<InitialValues>();
 
   useEffect(() => {
     getAllCitys()
@@ -52,72 +46,15 @@ const FormContent: React.FC<Error & Touch> = props => {
   }, []);
 
   const resetStateInitial = () => {
-    setFilteredDoctors(doctors);
-    setFilteredDoctorsSpec(doctorsSpecialty);
+    if (isSubmitting) {
+      setFilteredDoctors(doctors);
+      setFilteredDoctorsSpec(doctorsSpecialty);
+    }
   };
-
-  console.log('jjj');
-  useEffect(() => {
-    handleSexChange(
-      values.Sex,
-      doctorsSpecialty,
-      setFieldValue,
-      setFilteredDoctorsSpec,
-    );
-  }, [values.Sex]);
-
-  useEffect(() => {
-    handleDoctorChange(
-      values.Doctor,
-      doctors,
-      citys,
-      doctorsSpecialty,
-      setFieldValue,
-    );
-  }, [values.Doctor]);
-
-  useEffect(() => {
-    filteredByCity(
-      values.City,
-      doctors,
-      filteredDoctors,
-      citys,
-      setFieldValue,
-      setFilteredDoctors,
-    );
-  }, [values.City]);
-
-  useEffect(() => {
-    filterBySpecialty(
-      values.Specialty,
-      doctors,
-      doctorsSpecialty,
-      setFieldValue,
-      setFilteredDoctors,
-    );
-  }, [values.Specialty]);
-
-  useEffect(() => {
-    filterByDate(values.Birthday, setFieldValue, filteredDoctors, setFilteredDoctors);
-  }, [values.Birthday]);
-
-  useEffect(() => {
-    filteredByCityAndSpecialty(
-      values.City,
-      values.Specialty,
-      citys,
-      doctorsSpecialty,
-      doctors,
-      setFilteredDoctors,
-      values.Sex,
-      values.Doctor,
-      doctorsSpecialty,
-      setFilteredDoctorsSpec,
-      values.Sex,
-      values.Birthday,
-      setCitys,
-    );
-  }, [values.City, values.Specialty, values.Sex, values.Doctor]);
+useEffect(() => {
+filter(values, doctors, filteredDoctors, setFilteredDoctors, doctorsSpecialty, filteredDoctorsSpec, setFilteredDoctorsSpec ,citys, setFieldValue)
+},[values.Birthday, values.Doctor, values.City, values.Specialty, values.Sex])
+console.log('gg')
 
   const { transformeCities, transformeDoctors, transformeSpecialties } =
     forOptions(filteredDoctors, citys, filteredDoctorsSpec);

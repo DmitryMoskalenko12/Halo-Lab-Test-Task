@@ -1,4 +1,4 @@
-import { ISpecialty, IDoctors} from '../../types/types';
+import { ISpecialty } from '../../types/types';
 
 export const handleSexChange = (
   value: string,

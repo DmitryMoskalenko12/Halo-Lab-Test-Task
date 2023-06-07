@@ -16,18 +16,22 @@ export const filterByDate = (
       (currentDate.getTime() - birthday.getTime()) /
         (365.25 * 24 * 60 * 60 * 1000),
     );
-
     if (value.length === 10) {
       if (age < 16) {
         const doctorsAll = doctors.filter(doctor => doctor.isPediatrician);
         setDoctors(doctorsAll);
       }
+
       if (age >= 16) {
         const doctorsAll = doctors.filter(
           doctor => doctor.isPediatrician === false,
         );
         setDoctors(doctorsAll);
-      }
+      } 
+    } else {
+      setDoctors(doctors)
     }
+  } else {
+    setDoctors(doctors)
   }
 };
