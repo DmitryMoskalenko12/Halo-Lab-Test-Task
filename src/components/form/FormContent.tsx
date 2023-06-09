@@ -7,11 +7,12 @@ import Select from '../../ui/select/Select';
 import { gender } from '../../utils/gender';
 import { InitialValues } from '../../types/types';
 import { Error, Touch } from '../../types/types';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import useFormService from '../../services/formService';
 import forOptions from '../../utils/forOptions';
 import { IDoctors, ISpecialty, ICity, IGender } from '../../types/types';
 import filter from '../../utils/filters/filter';
+import ButtonReset from '../../ui/buttonReset/ButtonReset';
 
 const FormContent: React.FC<Error & Touch> = props => {
   const { getAllCitys, getAllDoctors, getAllSpecialtys } = useFormService();
@@ -26,7 +27,7 @@ const FormContent: React.FC<Error & Touch> = props => {
   const [citys, setCitys] = useState<ICity[]>([]);
   const [filteredCitys, setFilteredCitys] = useState<ICity[]>([]);
 
-  const { values, setFieldValue, isSubmitting } = useFormikContext<InitialValues>();
+  const { values, setFieldValue, isSubmitting, resetForm } = useFormikContext<InitialValues>();
 
   useEffect(() => {
     getAllCitys()
@@ -57,6 +58,14 @@ useEffect(() => {
 filter(values, doctors, filteredDoctors, setFilteredDoctors, doctorsSpecialty, filteredDoctorsSpec, setFilteredDoctorsSpec ,citys, setFieldValue, setCitys, gender, setGenders, filteredCitys, setFilteredCitys)
 },[values.Birthday, values.Doctor, values.City, values.Specialty, values.Sex])
 console.log('gg')
+
+const resetAllForm = useCallback(() => {
+  setFilteredDoctors(doctors);
+  setFilteredDoctorsSpec(doctorsSpecialty);
+  setFilteredCitys(citys);
+  setGenders(gender);
+  resetForm()
+}, [])
 
   const { transformeCities, transformeDoctors, transformeSpecialties } =
     forOptions(filteredDoctors, citys, filteredDoctorsSpec);
@@ -151,8 +160,8 @@ console.log('gg')
         touched={props.phoneTouch}
       />
       <ErrorMessage className={classes.Required} name='Phone' component='div' />
-
-      <Button /* onClick={resetStateInitial} */ title='Send' />
+      <Button title='Send' />
+      <ButtonReset title='Reset' onClick={resetAllForm} />
     </Form>
   );
 };

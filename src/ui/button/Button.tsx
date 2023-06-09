@@ -2,12 +2,11 @@ import classes from './Button.module.scss';
 
 interface IProps {
   title: string;
-  /* onClick: () => void; */
 }
 
-const Button: React.FC<IProps> = ({ title, /* onClick */ }) => {
+const Button: React.FC<IProps> = ({ title }) => {
   return (
-    <button /* onClick={onClick} */ className={classes.Button}>
+    <button className={classes.Button}>
       {title}
     </button>
   );
