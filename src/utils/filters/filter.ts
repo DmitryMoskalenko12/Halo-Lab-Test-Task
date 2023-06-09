@@ -4,7 +4,7 @@ import calcAge from "./helpers/calcAge";
 
 const filter = (values: IValues, doctors: IDoctors[], filteredDoctors:IDoctors[], setDoctors: Function, specialtys: ISpecialty[], filteredSpecialtys: ISpecialty[], setSpecialtys: Function, city: ICity[], setFieldValue: Function, setCitys: Function, gender: IGender[], setGender: Function, filteredCitys: ICity[], setFilteredCitys: Function) => {
 
-/* фильтрация докторов в зависимости от дата рождения пациента */
+/* фильтрация докторов в зависимости от даты рождения пациента */
 
   if (values.Birthday) {
     setFieldValue('Birthday', values.Birthday);
@@ -57,25 +57,65 @@ const filter = (values: IValues, doctors: IDoctors[], filteredDoctors:IDoctors[]
 
   if (values.City && values.Specialty) {
     const findSpec = filteredSpecialtys.find(spec => spec.name === values.Specialty);
-    const getDoctor = filteredDoctors.filter(doc => doc.specialityId === findSpec?.id);
-    setDoctors(getDoctor);
+    const getDoctors = filteredDoctors.filter(doc => doc.specialityId === findSpec?.id);
+    const getDoctor = getDoctors.find(doc => doc.specialityId === findSpec?.id)
+
+    setDoctors([{...getDoctor}]);
   }
 
   if (values.Doctor) {
     const getDoctor = values.Doctor.split(' ');
-    const findDoctor = filteredDoctors.find(doc => doc.name === getDoctor[0] && doc.surname === getDoctor[1])
+    const findDoctor = filteredDoctors.find(doc => doc.name === getDoctor[0] && doc.surname === getDoctor[1]);
+    const findDoctorOnly = filteredDoctors.filter(doc => doc.name === findDoctor?.name && doc.surname === findDoctor.surname)
     const findSpec = filteredSpecialtys.filter(spec =>  findDoctor?.specialityId === spec.id); 
     const findCity = filteredCitys.filter(city => city.id === findDoctor?.cityId);
+  /*   ))))) */
+    const findGender = gender.filter((sex, i) => findSpec.find(spec => spec.params?.gender === sex.value));
+    setDoctors(findDoctorOnly)
     setSpecialtys(findSpec);
     setCitys(findCity);
+    findGender.length === 0 ? setGender(gender) : setGender(findGender);
   }
 
   if (values.Specialty) {
-    const findSpecialty = filteredSpecialtys.find(spec => spec.name === values.Specialty);
-    const filterDoctors = filteredDoctors.filter(doc => doc.specialityId === findSpecialty?.id);
+    const findSpecialty = filteredSpecialtys.filter(spec => spec.name === values.Specialty);
+    const findSpecOnly = filteredSpecialtys.find(spec => spec.name === values.Specialty);
+    const filterDoctors = filteredDoctors.filter((doc,i) => findSpecialty.find(spec => spec.id === doc.specialityId));
     const filterCitys = filteredCitys.filter((city, i) => filterDoctors.find(doc => doc.cityId === city.id));
-    setCitys(filterCitys)
-    setDoctors(filterDoctors)
+    const findGender = gender.filter((sex) => findSpecOnly?.params?.gender === sex.value);
+    setCitys(filterCitys);
+    setDoctors(filterDoctors);
+    findGender.length === 0 ? setGender(gender) : setGender(findGender);
+    setSpecialtys(findSpecialty);
+  }
+
+  if (values.Sex) {
+    const filterSpecialtys = filteredSpecialtys.filter(specialty => {
+      if (values.Sex === 'Female') {
+        return (
+          !specialty.params ||
+          !specialty.params.gender ||
+          specialty.params.gender === values.Sex
+        );
+      } else if (values.Sex === 'Male') {
+        return (
+          !specialty.params ||
+          !specialty.params.gender ||
+          specialty.params.gender === values.Sex
+        );
+      } else {
+        return true;
+      }
+    })
+    const setGenderOnly = gender.filter(sex => sex.value === values.Sex);
+    setGender(setGenderOnly);
+    setSpecialtys(filterSpecialtys);
+    console.log(filterSpecialtys)
+  }
+
+  if (values.Sex && values.Specialty) {
+    const findSpecialtyOnly = filteredSpecialtys.find(spec => spec.name === values.Specialty);
+    setSpecialtys([{...findSpecialtyOnly}])
   }
 
   if (values.Specialty && values.Doctor) {
@@ -88,10 +128,35 @@ const filter = (values: IValues, doctors: IDoctors[], filteredDoctors:IDoctors[]
     setCitys(filterCitys)
   }
 
-  if (values.Specialty && values.City) {
-    const findCity = filteredCitys.find(city => city.name === values.City);
-    const findDoctor = filteredDoctors.filter(doc => doc.cityId === findCity?.id);
-    setDoctors(findDoctor);
+  if (values.City && values.Sex) {
+    const findCity = filteredCitys.filter(city => city.name === values.City);
+    const findSex = gender.find(sex => sex.value === values.Sex);
+
+    const filterDoctors = doctors.filter((doc, i) => {
+      return findCity.find(city => city.id === doc.cityId)
+    });
+
+    const filterSpecialty = filteredSpecialtys.filter((spec, i) => {
+      return filterDoctors.find(doc => doc.specialityId === spec.id && (spec.params?.gender === findSex?.value || spec))
+    });
+    filterSpecialty.length === 0 ? setDoctors([]): setDoctors(filterDoctors)
+    setSpecialtys(filterSpecialty)
+  }
+
+  if (values.Sex && values.Doctor) {
+    const getDoctor = values.Doctor.split(' ');
+    const findDoctor = filteredDoctors.find(doc => doc.name === getDoctor[0] && doc.surname === getDoctor[1]);
+    const findSex = gender.find(sex => sex.value === values.Sex);
+    const setSpecialtyOnly = filteredSpecialtys.filter(spec => spec.id === findDoctor?.specialityId && (spec.params?.gender === findSex?.value || spec))
+    setDoctors([{...findDoctor}])
+    setSpecialtys(setSpecialtyOnly)
+  }
+
+  if (values.City && values.Specialty && values.Sex) {
+    const findCity = city.find(city => city.name === values.City);
+    const findSpec = filteredSpecialtys.find(spec => spec.name === values.Specialty);
+    const getDoctors = filteredDoctors.filter(doc => doc.specialityId === findSpec?.id && doc.cityId === findCity?.id);
+    setDoctors(getDoctors)
   }
 
 }
