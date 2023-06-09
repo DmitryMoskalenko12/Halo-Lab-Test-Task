@@ -1,5 +1,10 @@
 export interface Data {
-  id: string | undefined;
+  id: string;
+  value: string;
+}
+
+export interface IGender {
+  id: string;
   value: string;
 }
 
@@ -63,4 +68,15 @@ export interface IDoctors {
   specialityId: string;
   isPediatrician: boolean;
   cityId: string;
+}
+
+export interface IValues {
+  Name: string,
+  Birthday: string,
+  Sex: string,
+  City: string,
+  Specialty: string,
+  Doctor:string,
+  Email: string,
+  Phone: string,
 }

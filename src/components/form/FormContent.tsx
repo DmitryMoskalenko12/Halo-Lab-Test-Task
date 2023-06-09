@@ -10,24 +10,30 @@ import { Error, Touch } from '../../types/types';
 import { useState, useEffect } from 'react';
 import useFormService from '../../services/formService';
 import forOptions from '../../utils/forOptions';
-import { IDoctors, ISpecialty, ICity } from '../../types/types';
+import { IDoctors, ISpecialty, ICity, IGender } from '../../types/types';
 import filter from '../../utils/filters/filter';
 
 const FormContent: React.FC<Error & Touch> = props => {
   const { getAllCitys, getAllDoctors, getAllSpecialtys } = useFormService();
   const [doctors, setDoctors] = useState<IDoctors[]>([]);
+  const [filteredDoctors, setFilteredDoctors] = useState<IDoctors[]>([]);
   const [doctorsSpecialty, setDoctorsSpecialty] = useState<ISpecialty[]>([]);
   const [filteredDoctorsSpec, setFilteredDoctorsSpec] = useState<ISpecialty[]>(
     [],
   );
+  const [genders, setGenders] = useState<IGender[]>([]);
+
   const [citys, setCitys] = useState<ICity[]>([]);
-  const [filteredDoctors, setFilteredDoctors] = useState<IDoctors[]>([]);
+  const [filteredCitys, setFilteredCitys] = useState<ICity[]>([]);
 
   const { values, setFieldValue, isSubmitting } = useFormikContext<InitialValues>();
 
   useEffect(() => {
     getAllCitys()
-      .then(citys => setCitys(citys))
+      .then(citys => {
+        setCitys(citys);
+        setFilteredCitys(citys);
+      })
       .catch(err => console.log(err));
 
     getAllDoctors()
@@ -43,16 +49,12 @@ const FormContent: React.FC<Error & Touch> = props => {
         setFilteredDoctorsSpec(specialtys);
       })
       .catch(err => console.log(err));
-  }, []);
+    const genders = [...gender];
+     setGenders(genders)
+  }, [isSubmitting]);
 
-  const resetStateInitial = () => {
-    if (isSubmitting) {
-      setFilteredDoctors(doctors);
-      setFilteredDoctorsSpec(doctorsSpecialty);
-    }
-  };
 useEffect(() => {
-filter(values, doctors, filteredDoctors, setFilteredDoctors, doctorsSpecialty, filteredDoctorsSpec, setFilteredDoctorsSpec ,citys, setFieldValue)
+filter(values, doctors, filteredDoctors, setFilteredDoctors, doctorsSpecialty, filteredDoctorsSpec, setFilteredDoctorsSpec ,citys, setFieldValue, setCitys, gender, setGenders, filteredCitys, setFilteredCitys)
 },[values.Birthday, values.Doctor, values.City, values.Specialty, values.Sex])
 console.log('gg')
 
@@ -88,7 +90,7 @@ console.log('gg')
 
       <Select
         title='Sex'
-        options={gender}
+        options={genders}
         name='Sex'
         error={props.sex}
         touched={props.sexTouch}
@@ -150,7 +152,7 @@ console.log('gg')
       />
       <ErrorMessage className={classes.Required} name='Phone' component='div' />
 
-      <Button onClick={resetStateInitial} title='Send' />
+      <Button /* onClick={resetStateInitial} */ title='Send' />
     </Form>
   );
 };
