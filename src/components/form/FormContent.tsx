@@ -27,7 +27,7 @@ const FormContent: React.FC<Error & Touch> = props => {
   const [citys, setCitys] = useState<ICity[]>([]);
   const [filteredCitys, setFilteredCitys] = useState<ICity[]>([]);
 
-  const { values, setFieldValue, isSubmitting, resetForm } = useFormikContext<InitialValues>();
+  const { values, setFieldValue, isSubmitting, resetForm, errors } = useFormikContext<InitialValues>();
 
   useEffect(() => {
     getAllCitys()
@@ -50,25 +50,35 @@ const FormContent: React.FC<Error & Touch> = props => {
         setFilteredDoctorsSpec(specialtys);
       })
       .catch(err => console.log(err));
-    const genders = [...gender];
-     setGenders(genders)
-  }, [isSubmitting]);
+      const genders = [...gender];
+      setGenders(genders)
+  }, []);
 
 useEffect(() => {
 filter(values, doctors, filteredDoctors, setFilteredDoctors, doctorsSpecialty, filteredDoctorsSpec, setFilteredDoctorsSpec ,citys, setFieldValue, setCitys, gender, setGenders, filteredCitys, setFilteredCitys)
 },[values.Birthday, values.Doctor, values.City, values.Specialty, values.Sex])
 console.log('gg')
 
-const resetAllForm = useCallback(() => {
+const resetAllForm = () => {
   setFilteredDoctors(doctors);
   setFilteredDoctorsSpec(doctorsSpecialty);
   setFilteredCitys(citys);
   setGenders(gender);
   resetForm()
-}, [])
+}
+
+const sendForm = () => { 
+  setFilteredDoctors(doctors);
+  setFilteredDoctorsSpec(doctorsSpecialty);
+  setFilteredCitys(citys);
+  setGenders(gender);
+}
+
+const disabledSend = (!values.Birthday || !values.City || !values.Doctor /* || !values.Phone */ || !values.Sex || !values.Specialty || !values.Name /* || !values.Email */) || !(!errors.Phone?.length) || !(!errors.Name?.length) || !(!errors.Birthday?.length) || !(!errors.Email?.length);
+const disabledReset = !values.Birthday && !values.City && !values.Doctor && !values.Phone && !values.Sex && !values.Specialty && !values.Name && !values.Email;
 
   const { transformeCities, transformeDoctors, transformeSpecialties } =
-    forOptions(filteredDoctors, citys, filteredDoctorsSpec);
+    forOptions(filteredDoctors, filteredCitys, filteredDoctorsSpec);
 
   return (
     <Form className={classes.Form} noValidate>
@@ -160,8 +170,8 @@ const resetAllForm = useCallback(() => {
         touched={props.phoneTouch}
       />
       <ErrorMessage className={classes.Required} name='Phone' component='div' />
-      <Button title='Send' />
-      <ButtonReset title='Reset' onClick={resetAllForm} />
+      <Button onClick={sendForm} title='Send' disabled={disabledSend} />
+      <ButtonReset title='Reset' onClick={resetAllForm} disabled={disabledReset} />
     </Form>
   );
 };

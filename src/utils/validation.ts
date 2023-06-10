@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const validationSchema = Yup.object({
+export const validationSchema = Yup.object().shape({
   Name: Yup.string()
     .min(2, 'Minimum 2 letters.')
     .required('Required field!')
@@ -28,8 +28,13 @@ export const validationSchema = Yup.object({
   Specialty: Yup.string().required('Required field!'),
   Doctor: Yup.string()
     .required('Required field!'),
-  Email: Yup.string().email('Invalid email address.'),
-  Phone: Yup.string()
-    .matches(/^380\d{9}$/, 'Invalid phone number format.')
-    .required('Required field!'),
+    Email: Yup.string().test('emailOrMobile', 'Email or Mobile number is required.', function (value) {
+      const mobileNumber = this.parent.Phone;
+      return !!value || !!mobileNumber;
+    }).matches(/^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/, 'Invalid email address.').email('Invalid email address.'),
+  
+    Phone: Yup.string().test('emailOrMobile', 'Email or Mobile number is required.', function (value) {
+      const email = this.parent.Email;
+      return !!value || !!email;
+    }).matches(/^380\d{9}$/, 'Invalid phone number format.')
 });
