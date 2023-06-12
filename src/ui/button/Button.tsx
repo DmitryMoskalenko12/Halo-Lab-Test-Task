@@ -9,9 +9,22 @@ interface IProps {
   onClick: () => void;
 }
 
-const Button: React.FC<IProps> = ({ title, onClick, disabled, doc, spec, city}) => {
+const Button: React.FC<IProps> = ({
+  title,
+  onClick,
+  disabled,
+  doc,
+  spec,
+  city,
+}) => {
   return (
-    <button disabled={disabled || doc.length === 0 || spec.length === 0 || city.length === 0} onClick={onClick} className={classes.Button}>
+    <button
+      disabled={
+        disabled || doc.length === 0 || spec.length === 0 || city.length === 0
+      }
+      onClick={onClick}
+      className={classes.Button}
+    >
       {title}
     </button>
   );

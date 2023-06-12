@@ -6,6 +6,6 @@ const calcAge = (values: string) => {
     (currentDate.getTime() - birthday.getTime()) /
       (365.25 * 24 * 60 * 60 * 1000),
   );
-  return age
-}
+  return age;
+};
 export default calcAge;

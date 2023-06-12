@@ -71,12 +71,12 @@ export interface IDoctors {
 }
 
 export interface IValues {
-  Name: string,
-  Birthday: string,
-  Sex: string,
-  City: string,
-  Specialty: string,
-  Doctor:string,
-  Email: string,
-  Phone: string,
+  Name: string;
+  Birthday: string;
+  Sex: string;
+  City: string;
+  Specialty: string;
+  Doctor: string;
+  Email: string;
+  Phone: string;
 }

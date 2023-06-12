@@ -25,18 +25,30 @@ export const validationSchema = Yup.object().shape({
     .required('Required field!'),
   Sex: Yup.string().required('Required field!'),
   City: Yup.string().required('Required field!'),
-  Doctor: Yup.string()
-    .required('Required field!'),
-    Email: Yup.string().test('emailOrMobile', 'Email or Mobile number is required.', function (value) {
-      const mobileNumber = this.parent.Phone;
-      return !!value || !!mobileNumber;
-    }).matches(
+  Doctor: Yup.string().required('Required field!'),
+  Email: Yup.string()
+    .test(
+      'emailOrMobile',
+      'Email or Mobile number is required.',
+      function (value) {
+        const mobileNumber = this.parent.Phone;
+        return !!value || !!mobileNumber;
+      },
+    )
+    .matches(
       /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]+)*$/,
-      'Invalid email format'
-    ).email('Invalid email address.'),
-  
-    Phone: Yup.string().test('emailOrMobile', 'Email or Mobile number is required.', function (value) {
-      const email = this.parent.Email;
-      return !!value || !!email;
-    }).matches(/^380\d{9}$/, 'Invalid phone number format.')
+      'Invalid email format',
+    )
+    .email('Invalid email address.'),
+
+  Phone: Yup.string()
+    .test(
+      'emailOrMobile',
+      'Email or Mobile number is required.',
+      function (value) {
+        const email = this.parent.Email;
+        return !!value || !!email;
+      },
+    )
+    .matches(/^380\d{9}$/, 'Invalid phone number format.'),
 });
