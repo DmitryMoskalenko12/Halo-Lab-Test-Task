@@ -7,7 +7,7 @@ import Select from '../../ui/select/Select';
 import { gender } from '../../utils/gender';
 import { InitialValues } from '../../types/types';
 import { Error, Touch } from '../../types/types';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import useFormService from '../../services/formService';
 import forOptions from '../../utils/forOptions';
 import { IDoctors, ISpecialty, ICity, IGender } from '../../types/types';
@@ -27,7 +27,7 @@ const FormContent: React.FC<Error & Touch> = props => {
   const [citys, setCitys] = useState<ICity[]>([]);
   const [filteredCitys, setFilteredCitys] = useState<ICity[]>([]);
 
-  const { values, setFieldValue, isSubmitting, resetForm, errors } = useFormikContext<InitialValues>();
+  const { values, setFieldValue, resetForm, errors } = useFormikContext<InitialValues>();
 
   useEffect(() => {
     getAllCitys()
@@ -55,7 +55,7 @@ const FormContent: React.FC<Error & Touch> = props => {
   }, []);
 
 useEffect(() => {
-filter(values, doctors, filteredDoctors, setFilteredDoctors, doctorsSpecialty, filteredDoctorsSpec, setFilteredDoctorsSpec ,citys, setFieldValue, setCitys, gender, setGenders, filteredCitys, setFilteredCitys)
+filter(values, doctors, filteredDoctors, setFilteredDoctors, doctorsSpecialty, filteredDoctorsSpec, setFilteredDoctorsSpec, citys, setFieldValue, setCitys, gender, setGenders, filteredCitys, setFilteredCitys, resetForm)
 },[values.Birthday, values.Doctor, values.City, values.Specialty, values.Sex])
 console.log('gg')
 
@@ -74,7 +74,7 @@ const sendForm = () => {
   setGenders(gender);
 }
 
-const disabledSend = (!values.Birthday || !values.City || !values.Doctor /* || !values.Phone */ || !values.Sex || !values.Specialty || !values.Name /* || !values.Email */) || !(!errors.Phone?.length) || !(!errors.Name?.length) || !(!errors.Birthday?.length) || !(!errors.Email?.length);
+const disabledSend = (!values.Birthday || !values.City || !values.Doctor || !values.Sex || !values.Name ) || !(!errors.Phone?.length) || !(!errors.Name?.length) || !(!errors.Birthday?.length) || !(!errors.Email?.length);
 const disabledReset = !values.Birthday && !values.City && !values.Doctor && !values.Phone && !values.Sex && !values.Specialty && !values.Name && !values.Email;
 
   const { transformeCities, transformeDoctors, transformeSpecialties } =
@@ -170,7 +170,7 @@ const disabledReset = !values.Birthday && !values.City && !values.Doctor && !val
         touched={props.phoneTouch}
       />
       <ErrorMessage className={classes.Required} name='Phone' component='div' />
-      <Button onClick={sendForm} title='Send' disabled={disabledSend} />
+      <Button onClick={sendForm} title='Send' disabled={disabledSend} doc = {transformeDoctors} spec = {transformeSpecialties} city = {transformeCities}/>
       <ButtonReset title='Reset' onClick={resetAllForm} disabled={disabledReset} />
     </Form>
   );

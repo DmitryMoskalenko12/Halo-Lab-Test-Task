@@ -2,7 +2,7 @@
 @use '../../styles/mixins.scss';
 
 .Input {
-  @include mixins.ForInput(20px, 200px);
+  @include mixins.ForInput(20px, 270px);
   border: variables.$InputBorderSize solid rgba(217, 217, 217, 0.39);
   border-radius: variables.$BorderRadius;
   padding: variables.$InputPadding;
@@ -17,6 +17,7 @@
 .Label {
   @include mixins.LabelFlex(flex, column);
   margin-bottom: variables.$MarginBottom;
+  cursor: pointer;
   input {
     margin-top: variables.$MarginTop;
   }
@@ -24,4 +25,5 @@
 
 .Error {
   border: variables.$BorderSize  solid variables.$ColorBorder;
+  transition: variables.$TransitionTime  all;
 }

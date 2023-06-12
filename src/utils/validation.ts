@@ -25,13 +25,15 @@ export const validationSchema = Yup.object().shape({
     .required('Required field!'),
   Sex: Yup.string().required('Required field!'),
   City: Yup.string().required('Required field!'),
-  Specialty: Yup.string().required('Required field!'),
   Doctor: Yup.string()
     .required('Required field!'),
     Email: Yup.string().test('emailOrMobile', 'Email or Mobile number is required.', function (value) {
       const mobileNumber = this.parent.Phone;
       return !!value || !!mobileNumber;
-    }).matches(/^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/, 'Invalid email address.').email('Invalid email address.'),
+    }).matches(
+      /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]+)*$/,
+      'Invalid email format'
+    ).email('Invalid email address.'),
   
     Phone: Yup.string().test('emailOrMobile', 'Email or Mobile number is required.', function (value) {
       const email = this.parent.Email;
