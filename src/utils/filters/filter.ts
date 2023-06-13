@@ -24,17 +24,16 @@ const filter = (
   values: IValues,
   doctors: IDoctors[],
   filteredDoctors: IDoctors[],
-  setDoctors: Function,
+  setDoctors: React.Dispatch<React.SetStateAction<IDoctors[]>>,
   specialtys: ISpecialty[],
   filteredSpecialtys: ISpecialty[],
-  setSpecialtys: Function,
+  setSpecialtys: React.Dispatch<React.SetStateAction<ISpecialty[]>>,
   city: ICity[],
   gender: IGender[],
-  setGender: Function,
+  setGender: React.Dispatch<React.SetStateAction<IGender[]>>,
   filteredCitys: ICity[],
-  setFilteredCitys: Function,
-  resetForm: Function,
-  setFieldValue: Function
+  setFilteredCitys: React.Dispatch<React.SetStateAction<ICity[]>>,
+  setFieldValue: Function,
 ) => {
   if (values.Birthday.length === 10) {
     filterByBirthday(
@@ -81,7 +80,7 @@ const filter = (
       setSpecialtys,
       filteredCitys,
       setFilteredCitys,
-      setFieldValue
+      setFieldValue,
     );
   }
 
@@ -91,10 +90,10 @@ const filter = (
       filteredDoctors,
       filteredSpecialtys,
       setSpecialtys,
-      setDoctors
+      setDoctors,
     );
   }
-  
+
   if (values.Doctor && !values.City && !values.Specialty) {
     filterByDoctors(
       values,
@@ -106,12 +105,17 @@ const filter = (
       setGender,
       filteredCitys,
       setFilteredCitys,
-      setFieldValue
+      setFieldValue,
     );
   }
 
   if (values.Birthday.length === 10 && values.Doctor) {
-    filterByBirthdayAndDoctor(values, filteredDoctors, setDoctors, setFieldValue);
+    filterByBirthdayAndDoctor(
+      values,
+      filteredDoctors,
+      setDoctors,
+      setFieldValue,
+    );
   }
 
   if (values.Specialty) {
@@ -147,7 +151,7 @@ const filter = (
       setDoctors,
       filteredSpecialtys,
       setSpecialtys,
-      filteredCitys
+      filteredCitys,
     );
   }
 
@@ -218,7 +222,7 @@ const filter = (
       setSpecialtys,
       gender,
       filteredCitys,
-      setFilteredCitys
+      setFilteredCitys,
     );
   }
 
@@ -232,7 +236,7 @@ const filter = (
       gender,
       filteredCitys,
       setFilteredCitys,
-      setFieldValue
+      setFieldValue,
     );
   }
 
@@ -245,17 +249,21 @@ const filter = (
       filteredCitys,
     );
   }
-  if ( values.Birthday.length === 10 &&
+  if (
+    values.Birthday.length === 10 &&
     values.Sex &&
     values.City &&
-    values.Doctor) {
-      filterByBirthdaySexCityAndDoc(values, filteredDoctors,
-        setDoctors,
-        filteredSpecialtys,
-        setSpecialtys,
-        setFieldValue
-    )
-    }
+    values.Doctor
+  ) {
+    filterByBirthdaySexCityAndDoc(
+      values,
+      filteredDoctors,
+      setDoctors,
+      filteredSpecialtys,
+      setSpecialtys,
+      setFieldValue,
+    );
+  }
 
   if (
     values.Birthday.length === 10 &&

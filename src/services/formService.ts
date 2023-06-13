@@ -10,24 +10,21 @@ const useFormService = () => {
   const { request, process } = useHttp();
 
   const getAllDoctors = async () => {
-   
-     const res = await request(_doctors);
+    const res = await request(_doctors);
     const cloneDoctors = [...res];
-    return cloneDoctors; 
+    return cloneDoctors;
   };
 
   const getAllCitys = async () => {
-   
     const res = await request(_citys);
     const cloneCitys = [...res];
-    return cloneCitys; 
+    return cloneCitys;
   };
 
   const getAllSpecialtys = async () => {
-    
-     const res = await request(_specialtys);
+    const res = await request(_specialtys);
     const cloneSpecialtys = [...res];
-    return cloneSpecialtys 
+    return cloneSpecialtys;
   };
 
   return { getAllCitys, getAllDoctors, getAllSpecialtys, process };

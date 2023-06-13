@@ -3,8 +3,8 @@ export const filterByCityAndDoctor = (
   values: IValues,
   filteredDoctors: IDoctors[],
   filteredSpecialtys: ISpecialty[],
-  setSpecialtys: Function,
-  setDoctors: Function
+  setSpecialtys: React.Dispatch<React.SetStateAction<ISpecialty[]>>,
+  setDoctors: Function,
 ) => {
   const getDoctor = values.Doctor.split(' ');
   const findDoctor = filteredDoctors.find(
@@ -14,6 +14,6 @@ export const filterByCityAndDoctor = (
     spec => findDoctor?.specialityId === spec.id,
   );
 
-  setDoctors([{...findDoctor}])
+  setDoctors([{ ...findDoctor }]);
   setSpecialtys(findSpec);
 };

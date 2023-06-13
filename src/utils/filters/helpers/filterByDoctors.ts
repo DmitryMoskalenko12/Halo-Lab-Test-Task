@@ -8,14 +8,14 @@ import {
 export const filterByDoctors = (
   values: IValues,
   filteredDoctors: IDoctors[],
-  setDoctors: Function,
+  setDoctors: React.Dispatch<React.SetStateAction<IDoctors[]>>,
   filteredSpecialtys: ISpecialty[],
-  setSpecialtys: Function,
+  setSpecialtys: React.Dispatch<React.SetStateAction<ISpecialty[]>>,
   gender: IGender[],
-  setGender: Function,
+  setGender: React.Dispatch<React.SetStateAction<IGender[]>>,
   filteredCitys: ICity[],
-  setFilteredCitys: Function,
-  setFieldValue: Function
+  setFilteredCitys: React.Dispatch<React.SetStateAction<ICity[]>>,
+  setFieldValue: Function,
 ) => {
   const getDoctor = values.Doctor.split(' ');
   const findDoctor = filteredDoctors.find(
@@ -30,7 +30,7 @@ export const filterByDoctors = (
   );
   const findCity = filteredCitys.filter(city => city.id === findDoctor?.cityId);
   const findGender = gender.filter((sex, i) =>
-    findSpec.find(spec => spec.params?.gender === sex.value)
+    findSpec.find(spec => spec.params?.gender === sex.value),
   );
   setFieldValue('Specialty', findSpec[0]?.name);
   setFieldValue('City', findCity[0]?.name);

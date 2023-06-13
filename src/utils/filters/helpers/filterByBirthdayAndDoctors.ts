@@ -4,8 +4,8 @@ import calcAge from './calcAge';
 export const filterByBirthdayAndDoctor = (
   values: IValues,
   filteredDoctors: IDoctors[],
-  setDoctors: Function,
-  setFieldValue: Function
+  setDoctors: React.Dispatch<React.SetStateAction<IDoctors[]>>,
+  setFieldValue: Function,
 ) => {
   const age = calcAge(values.Birthday);
   if (age <= 16 && age > 0) {
@@ -18,7 +18,9 @@ export const filterByBirthdayAndDoctor = (
       doc =>
         doc.name === findDoctor?.name && doc.surname === findDoctor.surname,
     );
-    findOnlyDoctor?.name && findOnlyDoctor.surname ? setDoctors([{...findOnlyDoctor}]) : setFieldValue('Doctor', 'Not found')
+    findOnlyDoctor?.name && findOnlyDoctor.surname
+      ? setDoctors([{ ...findOnlyDoctor }])
+      : setFieldValue('Doctor', 'Not found');
   }
   if (age > 16 && age <= 110) {
     const doctorsAll = filteredDoctors.filter(doctor => !doctor.isPediatrician);
@@ -30,6 +32,8 @@ export const filterByBirthdayAndDoctor = (
       doc =>
         doc.name === findDoctor?.name && doc.surname === findDoctor?.surname,
     );
-    findOnlyDoctor?.name && findOnlyDoctor.surname ? setDoctors([{...findOnlyDoctor}]) : setFieldValue('Doctor', 'Not found')
+    findOnlyDoctor?.name && findOnlyDoctor.surname
+      ? setDoctors([{ ...findOnlyDoctor }])
+      : setFieldValue('Doctor', 'Not found');
   }
 };

@@ -2,9 +2,9 @@ import { IDoctors, ICity, IValues } from '../../../types/types';
 export const filterBySpecialtyAndDoctor = (
   values: IValues,
   filteredDoctors: IDoctors[],
-  setDoctors: Function,
+  setDoctors: React.Dispatch<React.SetStateAction<IDoctors[]>>,
   filteredCitys: ICity[],
-  setFilteredCitys: Function,
+  setFilteredCitys: React.Dispatch<React.SetStateAction<ICity[]>>,
 ) => {
   const getDoctor = values.Doctor.split(' ');
   const findDoctor = filteredDoctors.filter(

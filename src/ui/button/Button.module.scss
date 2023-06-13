@@ -3,22 +3,30 @@
 
 .Button {
   @include mixins.ForButton(35px, 150px);
-  background-color: linear-gradient(184.53deg, #F9A43F 5.27%, #FB791B 91.78%);
+  background: linear-gradient(184.53deg, #F9A43F 5.27%, #FB791B 91.78%);
   border-radius: variables.$BorderRadius;
   border: none;
   margin: 0 auto;
   margin-top: variables.$MarginTop;
   cursor: pointer;
+  color: variables.$ButtonTextColor;
 }
 
 .Button:disabled {
-  background-color: variables.$BackGroundButtonDis;
+  background: variables.$BackGroundButtonDis;
   color: variables.$BackGroundButColor;
   transition: variables.$TransitionTime all;
 }
 
 .Button:enabled {
   background: linear-gradient(184.53deg, #F9A43F 5.27%, #FB791B 91.78%);
-  color: #ffffff;
-  transition: variables.$TransitionTime  all;
+  color: variables.$ButtonTextColor;
+  transition: variables.$TransitionTime all;
+}
+
+.Button:enabled:hover {
+  background: linear-gradient(184.53deg, #F9A43F 5.27%, #FB791B 91.78%);
+  color: variables.$ButtonTextColor;
+  transition: variables.$TransitionTime all;
+  box-shadow: variables.$BoxShadowParam;
 }

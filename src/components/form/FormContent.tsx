@@ -69,8 +69,7 @@ const FormContent: React.FC<Error & Touch> = props => {
       setGenders,
       filteredCitys,
       setFilteredCitys,
-      resetForm,
-      setFieldValue
+      setFieldValue,
     );
   }, [
     values.Birthday,
@@ -79,7 +78,6 @@ const FormContent: React.FC<Error & Touch> = props => {
     values.Specialty,
     values.Sex,
   ]);
-  console.log('gg');
 
   const resetAllForm = () => {
     setFilteredDoctors(doctors);

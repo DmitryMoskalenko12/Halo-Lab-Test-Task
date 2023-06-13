@@ -2,11 +2,11 @@ import { IDoctors, ISpecialty, ICity, IValues } from '../../../types/types';
 export const filterByGenderAndSpecialty = (
   values: IValues,
   filteredDoctors: IDoctors[],
-  setDoctors: Function,
+  setDoctors: React.Dispatch<React.SetStateAction<IDoctors[]>>,
   filteredSpecialtys: ISpecialty[],
-  setSpecialtys: Function,
+  setSpecialtys: React.Dispatch<React.SetStateAction<ISpecialty[]>>,
   filteredCitys: ICity[],
-  setFilteredCitys: Function,
+  setFilteredCitys: React.Dispatch<React.SetStateAction<ICity[]>>,
 ) => {
   const findSpecialtyOnly = filteredSpecialtys.filter(
     spec => spec.name === values.Specialty,

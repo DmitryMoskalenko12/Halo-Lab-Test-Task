@@ -16,9 +16,9 @@ export const validationSchema = Yup.object().shape({
       const [day, month, year] = value.split('/');
 
       const dayValid = parseInt(day, 10) >= 1 && parseInt(day, 10) <= 31;
-      const monthValid =
-        parseInt(month, 10) >= 1 && parseInt(month, 10) <= 12;
-      const yearValid = parseInt(year, 10) >= 1913 && parseInt(year, 10) <= 2023;
+      const monthValid = parseInt(month, 10) >= 1 && parseInt(month, 10) <= 12;
+      const yearValid =
+        parseInt(year, 10) >= 1913 && parseInt(year, 10) <= 2023;
 
       return dayValid && monthValid && yearValid;
     })
@@ -35,10 +35,7 @@ export const validationSchema = Yup.object().shape({
         return !!value || !!mobileNumber;
       },
     )
-    .matches(
-      /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]+)*$/,
-      'Invalid email format',
-    )
+    .matches(/^[a-zA-Z0-9]+@[a-zA-Z]+(\.[a-zA-Z]+)+$/, 'Invalid email format')
     .email('Invalid email address.'),
 
   Phone: Yup.string()

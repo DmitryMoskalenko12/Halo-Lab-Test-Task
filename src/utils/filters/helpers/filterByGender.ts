@@ -9,13 +9,13 @@ import {
 export const filterByGender = (
   values: IValues,
   filteredDoctors: IDoctors[],
-  setDoctors: Function,
+  setDoctors: React.Dispatch<React.SetStateAction<IDoctors[]>>,
   filteredSpecialtys: ISpecialty[],
-  setSpecialtys: Function,
+  setSpecialtys: React.Dispatch<React.SetStateAction<ISpecialty[]>>,
   gender: IGender[],
-  setGender: Function,
+  setGender: React.Dispatch<React.SetStateAction<IGender[]>>,
   filteredCitys: ICity[],
-  setFilteredCitys: Function,
+  setFilteredCitys: React.Dispatch<React.SetStateAction<ICity[]>>,
 ) => {
   const filterSpecialtys = filteredSpecialtys.filter(specialty => {
     if (values.Sex === 'Female') {

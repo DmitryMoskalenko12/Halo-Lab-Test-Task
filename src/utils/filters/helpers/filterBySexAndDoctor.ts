@@ -8,13 +8,13 @@ import {
 export const filterBySexAndDoctor = (
   values: IValues,
   filteredDoctors: IDoctors[],
-  setDoctors: Function,
+  setDoctors: React.Dispatch<React.SetStateAction<IDoctors[]>>,
   filteredSpecialtys: ISpecialty[],
-  setSpecialtys: Function,
+  setSpecialtys: React.Dispatch<React.SetStateAction<ISpecialty[]>>,
   gender: IGender[],
   filteredCitys: ICity[],
   setFilteredCitys: Function,
-  setFieldValue: Function
+  setFieldValue: Function,
 ) => {
   const getDoctor = values.Doctor.split(' ');
   const findDoctor = filteredDoctors.find(
@@ -27,7 +27,9 @@ export const filterBySexAndDoctor = (
       (spec.params?.gender === findSex?.value || spec),
   );
   const findCity = filteredCitys.find(city => findDoctor?.cityId === city.id);
-  findDoctor?.name && findDoctor.surname ? setDoctors([{...findDoctor}]) : setFieldValue('Doctor', 'Not found')
+  findDoctor?.name && findDoctor.surname
+    ? setDoctors([{ ...findDoctor }])
+    : setFieldValue('Doctor', 'Not found');
   setFilteredCitys([{ ...findCity }]);
   setSpecialtys(setSpecialtyOnly);
 };

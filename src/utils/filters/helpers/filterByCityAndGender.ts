@@ -8,15 +8,15 @@ import {
 export const filterByCityAndGender = (
   values: IValues,
   filteredDoctors: IDoctors[],
-  setDoctors: Function,
+  setDoctors: React.Dispatch<React.SetStateAction<IDoctors[]>>,
   filteredSpecialtys: ISpecialty[],
-  setSpecialtys: Function,
+  setSpecialtys: React.Dispatch<React.SetStateAction<ISpecialty[]>>,
   gender: IGender[],
   filteredCitys: ICity[],
-  setFilteredCitys: Function
+  setFilteredCitys: Function,
 ) => {
   const filterCity = filteredCitys.filter(city => city.name === values.City);
-  const findCity = filterCity.find(city => city.name === values.City)
+  const findCity = filterCity.find(city => city.name === values.City);
   const findSex = gender.find(sex => sex.value === values.Sex);
 
   const filterDoctors = filteredDoctors.filter((doc, i) => {
@@ -36,5 +36,5 @@ export const filterByCityAndGender = (
     ? setDoctors([])
     : setDoctors(filterDoctorsBySpec);
   setSpecialtys(filterSpecialty);
-  setFilteredCitys([{...findCity}])
+  setFilteredCitys([{ ...findCity }]);
 };
