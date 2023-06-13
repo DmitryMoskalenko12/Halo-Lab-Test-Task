@@ -1,6 +1,5 @@
 import { IDoctors, ISpecialty, ICity, IGender } from '../../types/types';
 import { IValues } from '../../types/types';
-import calcAge from './helpers/calcAge';
 import { filterByBirthday } from './helpers/filterByBirthday';
 import { filterByCity } from './helpers/filterByCity';
 import { filterByBirthdayAndCity } from './helpers/filterByBirthdayAndCity';
@@ -19,6 +18,7 @@ import { filterBySexAndDoctor } from './helpers/filterBySexAndDoctor';
 import { filterByCitySpecialtyAndSex } from './helpers/filterByCitySpecialtyAndSex';
 import { filterByBirthSpecCityAndDoctor } from './helpers/filterByBirthSpecCityAndDoctor';
 import { filterByCityAndDoctor } from './helpers/filterByCityAndDoctor';
+import { filterByBirthdaySexCityAndDoc } from './helpers/filterByBirthdaySexCityAndDoc';
 
 const filter = (
   values: IValues,
@@ -34,6 +34,7 @@ const filter = (
   filteredCitys: ICity[],
   setFilteredCitys: Function,
   resetForm: Function,
+  setFieldValue: Function
 ) => {
   if (values.Birthday.length === 10) {
     filterByBirthday(
@@ -55,19 +56,6 @@ const filter = (
     setFilteredCitys(city);
     setGender(gender);
     setSpecialtys(specialtys);
-  }
-
-  if (values.Birthday.length !== 10 && values.Birthday && values.City) {
-    resetForm();
-  }
-  if (values.Birthday.length !== 10 && values.Birthday && values.Doctor) {
-    resetForm();
-  }
-  if (values.Birthday.length !== 10 && values.Birthday && values.Sex) {
-    resetForm();
-  }
-  if (values.Birthday.length !== 10 && values.Birthday && values.Specialty) {
-    resetForm();
   }
 
   if (values.City) {
@@ -93,6 +81,7 @@ const filter = (
       setSpecialtys,
       filteredCitys,
       setFilteredCitys,
+      setFieldValue
     );
   }
 
@@ -102,10 +91,11 @@ const filter = (
       filteredDoctors,
       filteredSpecialtys,
       setSpecialtys,
+      setDoctors
     );
   }
-
-  if (values.Doctor) {
+  
+  if (values.Doctor && !values.City && !values.Specialty) {
     filterByDoctors(
       values,
       filteredDoctors,
@@ -116,11 +106,12 @@ const filter = (
       setGender,
       filteredCitys,
       setFilteredCitys,
+      setFieldValue
     );
   }
 
   if (values.Birthday.length === 10 && values.Doctor) {
-    filterByBirthdayAndDoctor(values, filteredDoctors, setDoctors);
+    filterByBirthdayAndDoctor(values, filteredDoctors, setDoctors, setFieldValue);
   }
 
   if (values.Specialty) {
@@ -156,7 +147,7 @@ const filter = (
       setDoctors,
       filteredSpecialtys,
       setSpecialtys,
-      filteredCitys,
+      filteredCitys
     );
   }
 
@@ -227,6 +218,7 @@ const filter = (
       setSpecialtys,
       gender,
       filteredCitys,
+      setFilteredCitys
     );
   }
 
@@ -240,6 +232,7 @@ const filter = (
       gender,
       filteredCitys,
       setFilteredCitys,
+      setFieldValue
     );
   }
 
@@ -252,6 +245,17 @@ const filter = (
       filteredCitys,
     );
   }
+  if ( values.Birthday.length === 10 &&
+    values.Sex &&
+    values.City &&
+    values.Doctor) {
+      filterByBirthdaySexCityAndDoc(values, filteredDoctors,
+        setDoctors,
+        filteredSpecialtys,
+        setSpecialtys,
+        setFieldValue
+    )
+    }
 
   if (
     values.Birthday.length === 10 &&

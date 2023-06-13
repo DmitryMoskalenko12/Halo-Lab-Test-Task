@@ -10,7 +10,7 @@ export const filterByBirthdayAndGender = (
   setFilteredCitys: Function,
 ) => {
   const age = calcAge(values.Birthday);
-  if (age < 16 && age > 0) {
+  if (age <= 16 && age > 0) {
     const doctorsAll = filteredDoctors.filter(doctor => doctor.isPediatrician);
     const filteredSpec = filteredSpecialtys.filter(spec =>
       doctorsAll.find(
@@ -19,12 +19,10 @@ export const filterByBirthdayAndGender = (
           (spec.params?.maxAge || !spec.params?.maxAge) &&
           (!spec.params ||
             !spec.params.gender ||
-            spec.params.gender === values.Sex),
+            spec.params.gender === values.Sex) && ( ((spec?.params?.maxAge || 17) <= 16 && age <= 16) || !spec.params?.maxAge ),
       ),
     );
-    const filterDoctors = doctorsAll.filter((doc, i) =>
-      filteredSpec.find(spec => spec.id === doc.specialityId),
-    );
+    const filterDoctors = doctorsAll.filter(doc => filteredSpec.find(spec => spec.id === doc.specialityId))
     const filterCitys = filteredCitys.filter(city =>
       filterDoctors.find(doc => doc.isPediatrician && city.id === doc.cityId),
     );
@@ -33,7 +31,7 @@ export const filterByBirthdayAndGender = (
     setSpecialtys(filteredSpec);
     setFilteredCitys(filterCitys);
   }
-  if (age >= 16 && age <= 110) {
+  if (age > 16 && age <= 110) {
     const doctorsAll = filteredDoctors.filter(doctor => !doctor.isPediatrician);
     const filteredSpec = filteredSpecialtys.filter(spec =>
       doctorsAll.find(
@@ -42,12 +40,10 @@ export const filterByBirthdayAndGender = (
           (spec.params?.minAge || !spec.params?.minAge) &&
           (!spec.params ||
             !spec.params.gender ||
-            spec.params.gender === values.Sex),
+            spec.params.gender === values.Sex) && ( ((spec?.params?.minAge || 0) >= 45 && age >= 45) || !spec.params?.minAge ),
       ),
     );
-    const filterDoctors = doctorsAll.filter((doc, i) =>
-      filteredSpec.find(spec => spec.id === doc.specialityId),
-    );
+    const filterDoctors = doctorsAll.filter(doc => filteredSpec.find(spec => spec.id === doc.specialityId))
     const filterCitys = filteredCitys.filter(city =>
       filterDoctors.find(doc => !doc.isPediatrician && city.id === doc.cityId),
     );

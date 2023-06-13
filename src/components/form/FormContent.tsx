@@ -70,6 +70,7 @@ const FormContent: React.FC<Error & Touch> = props => {
       filteredCitys,
       setFilteredCitys,
       resetForm,
+      setFieldValue
     );
   }, [
     values.Birthday,

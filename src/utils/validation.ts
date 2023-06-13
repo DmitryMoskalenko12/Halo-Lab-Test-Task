@@ -15,12 +15,12 @@ export const validationSchema = Yup.object().shape({
       if (!value) return true;
       const [day, month, year] = value.split('/');
 
-      const isDayValid = parseInt(day, 10) >= 1 && parseInt(day, 10) <= 31;
-      const isMonthValid =
+      const dayValid = parseInt(day, 10) >= 1 && parseInt(day, 10) <= 31;
+      const monthValid =
         parseInt(month, 10) >= 1 && parseInt(month, 10) <= 12;
-      const isYearValid = parseInt(year, 10) >= 1925;
+      const yearValid = parseInt(year, 10) >= 1913 && parseInt(year, 10) <= 2023;
 
-      return isDayValid && isMonthValid && isYearValid;
+      return dayValid && monthValid && yearValid;
     })
     .required('Required field!'),
   Sex: Yup.string().required('Required field!'),

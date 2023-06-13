@@ -9,7 +9,7 @@ const MainForm: React.FC = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
-        console.log(JSON.stringify(values, null, 2));
+        alert(JSON.stringify(values, null, 2));
         resetForm({ values: initialValues });
       }}
     >

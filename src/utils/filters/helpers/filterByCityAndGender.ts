@@ -13,12 +13,14 @@ export const filterByCityAndGender = (
   setSpecialtys: Function,
   gender: IGender[],
   filteredCitys: ICity[],
+  setFilteredCitys: Function
 ) => {
-  const findCity = filteredCitys.filter(city => city.name === values.City);
+  const filterCity = filteredCitys.filter(city => city.name === values.City);
+  const findCity = filterCity.find(city => city.name === values.City)
   const findSex = gender.find(sex => sex.value === values.Sex);
 
   const filterDoctors = filteredDoctors.filter((doc, i) => {
-    return findCity.find(city => city.id === doc.cityId);
+    return filterCity.find(city => city.id === doc.cityId);
   });
   const filterSpecialty = filteredSpecialtys.filter((spec, i) => {
     return filterDoctors.find(
@@ -34,4 +36,5 @@ export const filterByCityAndGender = (
     ? setDoctors([])
     : setDoctors(filterDoctorsBySpec);
   setSpecialtys(filterSpecialty);
+  setFilteredCitys([{...findCity}])
 };

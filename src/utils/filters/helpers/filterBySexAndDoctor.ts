@@ -14,6 +14,7 @@ export const filterBySexAndDoctor = (
   gender: IGender[],
   filteredCitys: ICity[],
   setFilteredCitys: Function,
+  setFieldValue: Function
 ) => {
   const getDoctor = values.Doctor.split(' ');
   const findDoctor = filteredDoctors.find(
@@ -26,12 +27,7 @@ export const filterBySexAndDoctor = (
       (spec.params?.gender === findSex?.value || spec),
   );
   const findCity = filteredCitys.find(city => findDoctor?.cityId === city.id);
-  console.log(typeof findDoctor);
-  const checkDoctor =
-    findDoctor === undefined
-      ? { id: 1, name: 'Not', surname: 'found' }
-      : { ...findDoctor };
+  findDoctor?.name && findDoctor.surname ? setDoctors([{...findDoctor}]) : setFieldValue('Doctor', 'Not found')
   setFilteredCitys([{ ...findCity }]);
-  setDoctors([checkDoctor]);
   setSpecialtys(setSpecialtyOnly);
 };

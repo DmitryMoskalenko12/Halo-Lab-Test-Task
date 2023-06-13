@@ -4,6 +4,7 @@ export const filterByCityAndDoctor = (
   filteredDoctors: IDoctors[],
   filteredSpecialtys: ISpecialty[],
   setSpecialtys: Function,
+  setDoctors: Function
 ) => {
   const getDoctor = values.Doctor.split(' ');
   const findDoctor = filteredDoctors.find(
@@ -12,5 +13,7 @@ export const filterByCityAndDoctor = (
   const findSpec = filteredSpecialtys.filter(
     spec => findDoctor?.specialityId === spec.id,
   );
+
+  setDoctors([{...findDoctor}])
   setSpecialtys(findSpec);
 };

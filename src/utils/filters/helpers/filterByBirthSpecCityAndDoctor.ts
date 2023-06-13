@@ -15,17 +15,15 @@ export const filterByBirthSpecCityAndDoctor = (
     const doctorsAll = filteredDoctors.filter(doctor => doctor.isPediatrician);
     const filterSpecialtys = filteredSpecialtys.filter(spec =>
       doctorsAll.find(
-        doc => doc.specialityId === spec.id && doc.isPediatrician,
+        doc => doc.specialityId === spec.id && ( ((spec?.params?.maxAge || 17) <= 16 && age <= 16) || !spec.params?.maxAge ) ,
       ),
     );
+    const filterDoctors = doctorsAll.filter(doc => filterSpecialtys.find(spec => spec.id === doc.specialityId))
     const filterCitys = filteredCitys.filter(city =>
-      doctorsAll.find(doc => doc.isPediatrician && city.id === doc.cityId),
-    );
-    const filteredDoctor = doctorsAll.filter((doc, i) =>
-      filterSpecialtys.find(spec => spec.id === doc.specialityId),
+      filterDoctors.find(doc => doc.isPediatrician && city.id === doc.cityId),
     );
 
-    setDoctors(filteredDoctor);
+    setDoctors(filterDoctors);
     setSpecialtys(filterSpecialtys);
     setFilteredCitys(filterCitys);
   }
@@ -33,18 +31,15 @@ export const filterByBirthSpecCityAndDoctor = (
     const doctorsAll = filteredDoctors.filter(doctor => !doctor.isPediatrician);
     const filterSpecialtys = filteredSpecialtys.filter(spec =>
       doctorsAll.find(
-        doc => doc.specialityId === spec.id && !doc.isPediatrician,
+        doc => doc.specialityId === spec.id && ( ((spec?.params?.minAge || 0) >= 45 && age >= 45) || !spec.params?.minAge ) ,
       ),
     );
+    const filterDoctors = doctorsAll.filter(doc => filterSpecialtys.find(spec => spec.id === doc.specialityId))
     const filterCitys = filteredCitys.filter(city =>
-      doctorsAll.find(doc => doc.cityId === city.id),
+      filterDoctors.find(doc => !doc.isPediatrician && city.id === doc.cityId),
     );
-    const filteredDoctor = doctorsAll.filter(doc =>
-      filterSpecialtys.find(
-        spec => spec.id === doc.specialityId && !doc.isPediatrician,
-      ),
-    );
-    setDoctors(filteredDoctor);
+
+    setDoctors(filterDoctors);
     setFilteredCitys(filterCitys);
     setSpecialtys(filterSpecialtys);
   }

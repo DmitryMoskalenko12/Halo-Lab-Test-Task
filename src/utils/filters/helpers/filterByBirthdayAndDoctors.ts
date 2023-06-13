@@ -5,9 +5,10 @@ export const filterByBirthdayAndDoctor = (
   values: IValues,
   filteredDoctors: IDoctors[],
   setDoctors: Function,
+  setFieldValue: Function
 ) => {
   const age = calcAge(values.Birthday);
-  if (age < 16 && age > 0) {
+  if (age <= 16 && age > 0) {
     const doctorsAll = filteredDoctors.filter(doctor => doctor.isPediatrician);
     const getDoctor = values.Doctor.split(' ');
     const findDoctor = filteredDoctors.find(
@@ -17,13 +18,9 @@ export const filterByBirthdayAndDoctor = (
       doc =>
         doc.name === findDoctor?.name && doc.surname === findDoctor.surname,
     );
-    const checkDoctor =
-      findOnlyDoctor === undefined
-        ? { id: 1, name: 'Not', surname: 'found' }
-        : { ...findOnlyDoctor };
-    setDoctors([checkDoctor]);
+    findOnlyDoctor?.name && findOnlyDoctor.surname ? setDoctors([{...findOnlyDoctor}]) : setFieldValue('Doctor', 'Not found')
   }
-  if (age >= 16 && age <= 110) {
+  if (age > 16 && age <= 110) {
     const doctorsAll = filteredDoctors.filter(doctor => !doctor.isPediatrician);
     const getDoctor = values.Doctor.split(' ');
     const findDoctor = filteredDoctors.find(
@@ -33,10 +30,6 @@ export const filterByBirthdayAndDoctor = (
       doc =>
         doc.name === findDoctor?.name && doc.surname === findDoctor?.surname,
     );
-    const checkDoctor =
-      findOnlyDoctor === undefined
-        ? { id: 1, name: 'Not', surname: 'found' }
-        : { ...findOnlyDoctor };
-    setDoctors([checkDoctor]);
+    findOnlyDoctor?.name && findOnlyDoctor.surname ? setDoctors([{...findOnlyDoctor}]) : setFieldValue('Doctor', 'Not found')
   }
 };
